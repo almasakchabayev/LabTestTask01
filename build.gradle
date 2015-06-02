@@ -1,0 +1,47 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    flatDir(dirs: 'libs')
+}
+
+jar {
+    baseName = 'test-task'
+    version =  '0.1.0'
+}
+
+// add compile provided
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
+sourceSets {
+    main { compileClasspath += [configurations.provided] }
+}
+
+idea {
+    module {
+        scopes.PROVIDED.plus += [configurations.provided]
+    }
+}
+
+dependencies {
+    compile 'ojdbc6:ojdbc6'
+    compile 'javax.transaction:jta:1.1'
+    compile 'springframework:spring-jdbc:1.2.6'
+    compile 'com.zaxxer:HikariCP:2.3.8'
+    compile 'org.flywaydb:flyway-core:3.2.1'
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'org.slf4j:slf4j-log4j12:1.7.12'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
