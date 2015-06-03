@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC 
+"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" 
+"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+	<form-beans>
+		<form-bean name="helloWorldForm" 
+			type="com.epam.aa.labtesttask01.form.HelloWorldForm"/>
+        <form-bean name="NewsListForm"
+                   type="com.epam.aa.labtesttask01.form.NewsListForm" />
+	</form-beans>
+
+	<action-mappings>
+		<action path="/helloWorld"
+			type="com.epam.aa.labtesttask01.action.HelloWorldAction"
+			name="helloWorldForm">
+			<forward name="success" path="/HelloWorld.jsp"/>
+		</action>
+        <action path="/index"
+                type="com.epam.aa.labtesttask01.action.NewsListAction"
+                name="NewsListForm">
+            <forward name="success" path="/index.jsp" />
+        </action>
+	</action-mappings>
+
+</struts-config>

@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'war'
 apply plugin: 'idea'
 
 sourceCompatibility = 1.8
@@ -10,28 +11,12 @@ repositories {
     flatDir(dirs: 'libs')
 }
 
-jar {
-    baseName = 'test-task'
-    version =  '0.1.0'
-}
-
-// add compile provided
-configurations {
-    provided
-    compile.extendsFrom provided
-}
-
-sourceSets {
-    main { compileClasspath += [configurations.provided] }
-}
-
-idea {
-    module {
-        scopes.PROVIDED.plus += [configurations.provided]
-    }
-}
-
 dependencies {
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'org.apache.struts:struts-core:1.3.10'
+    compile 'org.apache.struts:struts-taglib:1.3.10'
+    compile 'org.reflections:reflections:0.9.9'
+    runtime 'jstl:jstl:1.2'
     compile 'ojdbc6:ojdbc6'
     compile 'javax.transaction:jta:1.1'
     compile 'springframework:spring-jdbc:1.2.6'

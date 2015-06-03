@@ -1,4 +1,4 @@
-package dao;
+package com.epam.aa.labtesttask01.dao;
 
 public class DaoException extends RuntimeException {
     public DaoException() {

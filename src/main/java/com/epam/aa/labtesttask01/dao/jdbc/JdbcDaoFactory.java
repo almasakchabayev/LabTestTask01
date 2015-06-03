@@ -1,8 +1,8 @@
-package dao.jdbc;
+package com.epam.aa.labtesttask01.dao.jdbc;
 
-import dao.DaoException;
-import dao.DaoFactory;
-import dao.DaoManager;
+import com.epam.aa.labtesttask01.dao.DaoException;
+import com.epam.aa.labtesttask01.dao.DaoFactory;
+import com.epam.aa.labtesttask01.dao.NewsDao;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 import oracle.jdbc.pool.OracleDataSource;
 import org.flywaydb.core.Flyway;
@@ -13,8 +13,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 public class JdbcDaoFactory extends DaoFactory {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DaoFactory.class);
-    public static final String HIKARI_PROPERTIES = "/hikari.properties";
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcDaoFactory.class);
 
     private static JdbcDaoFactory instance = new JdbcDaoFactory();
 
@@ -28,7 +27,7 @@ public class JdbcDaoFactory extends DaoFactory {
     private DataSource initDataSource() {
         LOGGER.info("Configuring Jdbc DataSource");
 
-        OracleDataSource dataSource = null;
+        OracleDataSource dataSource;
         try {
             dataSource = new OracleConnectionPoolDataSource();
         } catch (SQLException e) {
@@ -47,17 +46,15 @@ public class JdbcDaoFactory extends DaoFactory {
     private void applyMigrations(DataSource ds) {
         Flyway flyway = new Flyway();
         flyway.setDataSource(ds);
-        flyway.clean();
         flyway.migrate();
         LOGGER.info("Flyway migrations successfully applied");
     }
     // ----------------END SETUP-----------------
 
     @Override
-    public DaoManager createDaoManager() {
-        // todo ask if rethrow exception or just add to method
+    public NewsDao getNewsDao() {
         try {
-            return new JdbcDaoManager(dataSource.getConnection());
+            return new JdbcNewsDao(dataSource.getConnection());
         } catch (SQLException e) {
             throw new DaoException("Could not get connection from dataSource", e);
         }

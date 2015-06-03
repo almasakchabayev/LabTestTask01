@@ -1,8 +1,7 @@
-package dao;
+package com.epam.aa.labtesttask01.dao;
 
-import dao.jdbc.JdbcDaoFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.epam.aa.labtesttask01.dao.jdbc.JdbcDaoFactory;
+import com.epam.aa.labtesttask01.dao.jdbc.JdbcDaoFactory;
 
 public abstract class DaoFactory {
 
@@ -16,6 +15,5 @@ public abstract class DaoFactory {
         else
             throw new DaoException("Implementation for this type does not exist");
     }
-
-    public abstract DaoManager createDaoManager();
+    public abstract NewsDao getNewsDao();
 }

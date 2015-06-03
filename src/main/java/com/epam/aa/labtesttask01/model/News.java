@@ -1,12 +1,13 @@
-package model;
+package com.epam.aa.labtesttask01.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class News {
     private Integer id;
     private boolean deleted;
     private String title;
-    private LocalDate date;
+    private Date date;
     private String brief;
     private String content;
 
@@ -34,11 +35,11 @@ public class News {
         this.title = title;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
