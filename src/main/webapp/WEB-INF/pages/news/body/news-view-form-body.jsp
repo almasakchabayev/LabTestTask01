@@ -48,6 +48,7 @@
     </div>
     <div class="clearfix"></div>
     <br/>
+    <html:text property="id" style="visibility: hidden" />
 
     <div class="col-sm-12 text-right">
         <html:submit value="Delete" />

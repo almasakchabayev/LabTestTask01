@@ -5,10 +5,7 @@ import com.epam.aa.labtesttask01.dao.NewsDao;
 import com.epam.aa.labtesttask01.form.NewsListForm;
 import com.epam.aa.labtesttask01.form.NewsViewForm;
 import com.epam.aa.labtesttask01.model.News;
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,10 +32,8 @@ public class NewsViewAction extends Action {
             return processGetMethod(mapping, (NewsViewForm) form);
         } else if (method.equals("POST")) {
             return processPostMethod(mapping, (NewsViewForm) form);
-        } else {
-            // todo add error
-            return mapping.findForward("error");
         }
+        throw new ActionException("Methods other then GET and POST are not supported");
     }
 
     private ActionForward processGetMethod(ActionMapping mapping, NewsViewForm form) {
@@ -50,25 +45,20 @@ public class NewsViewAction extends Action {
             return mapping.findForward("success");
         } catch (SQLException e) {
             LOGGER.error("Could not retrieve news by id {}", id, e);
-            return mapping.findForward("error");
+            throw new ActionException(e);
         }
     }
 
     private ActionForward processPostMethod(ActionMapping mapping, NewsViewForm form) throws SQLException {
-//        String[] newsIdsToDelete = form.getNewsIdsToDelete();
-//        Integer[] newsIds = new Integer[newsIdsToDelete.length];
-//        for (int i = 0; i < newsIds.length; i++) {
-//            newsIds[i] = Integer.parseInt(newsIdsToDelete[i]);
-//        }
-//
-//        try {
-//            NewsDao newsDao = daoFactory.getNewsDao();
-//            newsDao.deleteByIds(newsIds);
-//            return processGetMethod(mapping, form);
-//        } catch (SQLException e) {
-//            LOGGER.error("Could not delete news entities given ids {}", newsIds,  e);
-//            return mapping.findForward("error");
-//        }
-        return mapping.findForward("error");
+        Integer id = form.getId();
+        try {
+            NewsDao newsDao = daoFactory.getNewsDao();
+            newsDao.deleteByIds(id);
+            ActionRedirect redirect = new ActionRedirect(mapping.findForward("redirect"));
+            return redirect;
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete news given id {}", id,  e);
+            throw new ActionException(e);
+        }
     }
 }
