@@ -1,7 +1,6 @@
 package com.epam.aa.labtesttask01.dao;
 
 import com.epam.aa.labtesttask01.dao.jdbc.JdbcDaoFactory;
-import com.epam.aa.labtesttask01.dao.jdbc.JdbcDaoFactory;
 
 public abstract class DaoFactory {
 

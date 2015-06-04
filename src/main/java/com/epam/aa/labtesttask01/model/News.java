@@ -1,6 +1,5 @@
 package com.epam.aa.labtesttask01.model;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class News {
@@ -57,5 +56,17 @@ public class News {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "News{" +
+                "id=" + id +
+                ", deleted=" + deleted +
+                ", title='" + title + '\'' +
+                ", date=" + date +
+                ", brief='" + brief + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

@@ -1,10 +1,8 @@
 package com.epam.aa.labtesttask01.dao.jdbc;
 
-import com.epam.aa.labtesttask01.dao.DaoFactory;
 import com.epam.aa.labtesttask01.dao.NewsDao;
 import com.epam.aa.labtesttask01.model.News;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -14,7 +12,8 @@ public class JdbcNewsDao implements NewsDao {
 
     public static final String FIND_ALL = "SELECT id, deleted, title, creation_date, brief, content " +
             "FROM news WHERE deleted = 0";
-    public static final String FIND_BY_ID = "SELECT id, deleted, title, creation_date, brief, content FROM news WHERE id = ?";
+    public static final String FIND_BY_ID = "SELECT id, deleted, title, creation_date, brief, content FROM news WHERE deleted = 0 AND id = ?";
+    public static final String UPDATE_NEWS = "UPDATE news SET title = ?, creation_date = ?, brief = ?, content = ?";
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcNewsDao(DataSource dataSource) {
@@ -32,13 +31,14 @@ public class JdbcNewsDao implements NewsDao {
     }
 
     @Override
-    public boolean update(News news) {
-        return false;
+    public void update(News news) throws SQLException {
+        jdbcTemplate.update(UPDATE_NEWS,
+                news.getTitle(), news.getDate(), news.getBrief(), news.getContent());
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
+    public void delete(Integer id) throws SQLException {
+        deleteByIds(id);
     }
 
     @Override
@@ -53,15 +53,15 @@ public class JdbcNewsDao implements NewsDao {
     }
 
     private String constructDeleteByIdsString(Integer... ids) {
-        StringBuffer sqlBuffer = new StringBuffer("UPDATE news SET deleted = 1 WHERE id in (");
+        StringBuilder stringBuilder = new StringBuilder("UPDATE news SET deleted = 1 WHERE id in (");
         String prefix = "";
         for (Integer id : ids) {
-            sqlBuffer.append(prefix);
+            stringBuilder.append(prefix);
             prefix = ",";
-            sqlBuffer.append(id);
+            stringBuilder.append(id);
         }
-        sqlBuffer.append(")");
+        stringBuilder.append(")");
 
-        return sqlBuffer.toString();
+        return stringBuilder.toString();
     }
 }

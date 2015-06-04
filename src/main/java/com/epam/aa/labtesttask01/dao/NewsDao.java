@@ -8,8 +8,8 @@ import java.util.List;
 public interface NewsDao {
     Integer insert(News news);
     News findById(Integer id) throws SQLException;
-    boolean update(News news);
-    boolean delete(Integer id);
+    void update(News news) throws SQLException;
+    void delete(Integer id) throws SQLException;
 
     List<News> findAll() throws SQLException;
 

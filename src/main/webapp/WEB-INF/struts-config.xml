@@ -9,8 +9,8 @@
 	<form-beans>
         <form-bean name="newsListForm"
                    type="com.epam.aa.labtesttask01.form.NewsListForm" />
-        <form-bean name="newsViewForm"
-                   type="com.epam.aa.labtesttask01.form.NewsViewForm" />
+        <form-bean name="newsForm"
+                   type="com.epam.aa.labtesttask01.form.NewsForm" />
 	</form-beans>
 
 	<action-mappings>
@@ -22,10 +22,17 @@
         </action>
         <action path="/newsView"
                 type="com.epam.aa.labtesttask01.action.NewsViewAction"
-                name="newsViewForm"
+                name="newsForm"
                 scope="request">
             <forward name="success" path="/WEB-INF/pages/news/news-view-form.jsp" />
             <forward name="redirect" redirect="true" path="/newsList.do" />
+        </action>
+        <action path="/newsEdit"
+                type="com.epam.aa.labtesttask01.action.NewsEditAction"
+                name="newsForm"
+                scope="request">
+            <forward name="success" path="/WEB-INF/pages/news/news-edit-form.jsp" />
+            <forward name="redirect" redirect="true" path="/newsView.do" />
         </action>
 	</action-mappings>
 

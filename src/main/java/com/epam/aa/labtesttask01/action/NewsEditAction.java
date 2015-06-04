@@ -11,13 +11,17 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class NewsViewAction extends Action {
-    private static final Logger LOGGER = LoggerFactory.getLogger(NewsViewAction.class);
+public class NewsEditAction extends Action {
+    private static final Logger LOGGER = LoggerFactory.getLogger(NewsEditAction.class);
 
     DaoFactory daoFactory;
 
-    public NewsViewAction() {
+    public NewsEditAction() {
         this.daoFactory = DaoFactory.getInstance("jdbc");
     }
 
@@ -29,7 +33,7 @@ public class NewsViewAction extends Action {
         if (method.equals("GET")) {
             return processGetMethod(mapping, (NewsForm) form);
         } else if (method.equals("POST")) {
-            return processPostMethod(mapping, (NewsForm) form);
+            return processPostMethod(mapping, (NewsForm) form, request);
         } else {
             throw new ActionException("Methods other then GET and POST are not supported");
         }
@@ -48,15 +52,41 @@ public class NewsViewAction extends Action {
         }
     }
 
-    private ActionForward processPostMethod(ActionMapping mapping, NewsForm form) throws SQLException {
-        Integer id = form.getId();
+    private ActionForward processPostMethod(ActionMapping mapping, NewsForm form, HttpServletRequest request) throws SQLException {
+        News news = parseNewsFromRequest(form, request);
         try {
             NewsDao newsDao = daoFactory.getNewsDao();
-            newsDao.delete(id);
+            newsDao.update(news);
+
             ActionRedirect redirect = new ActionRedirect(mapping.findForward("redirect"));
+            redirect.addParameter("id", news.getId());
             return redirect;
         } catch (SQLException e) {
-            throw new ActionException("Could not delete news given id {}" + id, e);
+            throw new ActionException("Could not update news {}" + news, e);
         }
+    }
+
+    private News parseNewsFromRequest(NewsForm form, HttpServletRequest request) {
+        String title = request.getParameter("news.title");
+        String dateString = request.getParameter("news.date");
+        String brief = request.getParameter("news.brief");
+        String content = request.getParameter("news.content");
+        DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        Date date;
+        try {
+            date = format.parse(dateString);
+        } catch (ParseException e) {
+            // todo add to errors which will shown to user
+            throw new ActionException(e);
+        }
+        Integer id = form.getId();
+
+        News news = new News();
+        news.setId(id);
+        news.setTitle(title);
+        news.setDate(date);
+        news.setBrief(brief);
+        news.setContent(content);
+        return news;
     }
 }

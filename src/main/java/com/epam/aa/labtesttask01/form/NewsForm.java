@@ -3,9 +3,7 @@ package com.epam.aa.labtesttask01.form;
 import com.epam.aa.labtesttask01.model.News;
 import org.apache.struts.action.ActionForm;
 
-import java.util.List;
-
-public class NewsViewForm extends ActionForm {
+public class NewsForm extends ActionForm {
     private News news;
     private Integer id;
 
