@@ -1,0 +1,12 @@
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 1.3//EN"
+"http://struts.apache.org/dtds/tiles-config_1_3.dtd">
+<tiles-definitions>
+
+	<definition name="news-template" template="/WEB-INF/pages/tiles/layout.jsp">
+		<put name="header" value="/WEB-INF/pages/tiles/header.jsp" />
+        <put name="sidebar" value="/WEB-INF/pages/tiles/sidebar.jsp" />
+		<put name="footer" value="/WEB-INF/pages/tiles/footer.jsp" />
+	</definition>
+
+</tiles-definitions>

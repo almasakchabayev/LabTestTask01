@@ -24,7 +24,6 @@ public class NewsListAction extends Action {
         List<News> newsList = newsDao.findAll();
 
         NewsListForm newsListForm = (NewsListForm) form;
-        newsListForm.setNewsList(newsList);
         request.setAttribute("newsList", newsList);
         return mapping.findForward("success");
     }

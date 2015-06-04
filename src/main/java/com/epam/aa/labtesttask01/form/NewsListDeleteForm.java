@@ -3,10 +3,9 @@ package com.epam.aa.labtesttask01.form;
 import com.epam.aa.labtesttask01.model.News;
 import org.apache.struts.action.ActionForm;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class NewsListForm extends ActionForm {
+public class NewsListDeleteForm extends ActionForm {
     List<News> newsList;
 
     public News getNews(int index) {

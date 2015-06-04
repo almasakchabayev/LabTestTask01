@@ -5,24 +5,25 @@
 
 <struts-config>
 
+
 	<form-beans>
-		<form-bean name="helloWorldForm" 
-			type="com.epam.aa.labtesttask01.form.HelloWorldForm"/>
         <form-bean name="NewsListForm"
                    type="com.epam.aa.labtesttask01.form.NewsListForm" />
 	</form-beans>
 
 	<action-mappings>
-		<action path="/helloWorld"
-			type="com.epam.aa.labtesttask01.action.HelloWorldAction"
-			name="helloWorldForm">
-			<forward name="success" path="/HelloWorld.jsp"/>
-		</action>
-        <action path="/index"
+        <action path="/newsList"
                 type="com.epam.aa.labtesttask01.action.NewsListAction"
-                name="NewsListForm">
-            <forward name="success" path="/index.jsp" />
+                name="NewsListForm"
+                scope="request">
+            <forward name="success" path="/WEB-INF/pages/news/news-list-form.jsp" />
         </action>
 	</action-mappings>
+
+    <message-resources parameter="messages" />
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config"
+                      value="/WEB-INF/tiles-defs.xml"/>
+    </plug-in>
 
 </struts-config>
