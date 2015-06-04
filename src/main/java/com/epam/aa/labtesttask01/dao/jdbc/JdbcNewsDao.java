@@ -13,7 +13,7 @@ public class JdbcNewsDao implements NewsDao {
     public static final String FIND_ALL = "SELECT id, deleted, title, creation_date, brief, content " +
             "FROM news WHERE deleted = 0";
     public static final String FIND_BY_ID = "SELECT id, deleted, title, creation_date, brief, content FROM news WHERE deleted = 0 AND id = ?";
-    public static final String UPDATE_NEWS = "UPDATE news SET title = ?, creation_date = ?, brief = ?, content = ?";
+    public static final String UPDATE_NEWS = "UPDATE news SET title = ?, creation_date = ?, brief = ?, content = ? WHERE id = ?";
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcNewsDao(DataSource dataSource) {
@@ -33,7 +33,7 @@ public class JdbcNewsDao implements NewsDao {
     @Override
     public void update(News news) throws SQLException {
         jdbcTemplate.update(UPDATE_NEWS,
-                news.getTitle(), news.getDate(), news.getBrief(), news.getContent());
+                news.getTitle(), news.getDate(), news.getBrief(), news.getContent(), news.getId());
     }
 
     @Override
