@@ -35,8 +35,7 @@ public class NewsListAction extends Action {
         } else if (method.equals("POST")) {
             return processPostMethod(mapping, (NewsListForm) form);
         } else {
-            // todo add error
-            return mapping.findForward("error");
+            throw new ActionException("Methods other then GET and POST are not supported");
         }
     }
 
@@ -47,8 +46,7 @@ public class NewsListAction extends Action {
             form.setNewsList(newsList);
             return mapping.findForward("success");
         } catch (SQLException e) {
-            LOGGER.error("Could not retrieve news entities with findAll method", e);
-            return mapping.findForward("error");
+            throw new ActionException("Could not retrieve news entities with findAll method", e);
         }
     }
 
@@ -64,8 +62,7 @@ public class NewsListAction extends Action {
             newsDao.deleteByIds(newsIds);
             return processGetMethod(mapping, form);
         } catch (SQLException e) {
-            LOGGER.error("Could not delete news entities given ids {}", newsIds,  e);
-            return mapping.findForward("error");
+            throw new ActionException("Could not delete news entities given ids {}" + newsIds, e);
         }
     }
 }

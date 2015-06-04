@@ -32,8 +32,10 @@ public class NewsViewAction extends Action {
             return processGetMethod(mapping, (NewsViewForm) form);
         } else if (method.equals("POST")) {
             return processPostMethod(mapping, (NewsViewForm) form);
+        } else {
+            throw new ActionException("Methods other then GET and POST are not supported");
         }
-        throw new ActionException("Methods other then GET and POST are not supported");
+
     }
 
     private ActionForward processGetMethod(ActionMapping mapping, NewsViewForm form) {
@@ -44,8 +46,7 @@ public class NewsViewAction extends Action {
             form.setNews(news);
             return mapping.findForward("success");
         } catch (SQLException e) {
-            LOGGER.error("Could not retrieve news by id {}", id, e);
-            throw new ActionException(e);
+            throw new ActionException("Could not retrieve news by id {}" + id, e);
         }
     }
 
@@ -57,8 +58,7 @@ public class NewsViewAction extends Action {
             ActionRedirect redirect = new ActionRedirect(mapping.findForward("redirect"));
             return redirect;
         } catch (SQLException e) {
-            LOGGER.error("Could not delete news given id {}", id,  e);
-            throw new ActionException(e);
+            throw new ActionException("Could not delete news given id {}" + id, e);
         }
     }
 }
