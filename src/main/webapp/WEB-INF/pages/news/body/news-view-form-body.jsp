@@ -47,4 +47,9 @@
         </div>
     </div>
     <div class="clearfix"></div>
+    <br/>
+
+    <div class="col-sm-12 text-right">
+        <html:submit value="Delete" />
+    </div>
 </html:form>

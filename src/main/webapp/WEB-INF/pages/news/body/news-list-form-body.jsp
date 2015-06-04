@@ -3,6 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-nested" prefix="nested"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 
 <html:form action="newsList">
 
@@ -22,7 +23,9 @@
         </div>
         <div class="col-sm-12">
             <div class="text-right">
-                <a href="#">view</a>
+                <nested:link action="/newsView" paramId="id" paramProperty="id">
+                    View
+                </nested:link>
                 <a href="#">edit</a>
                 <html:multibox property="newsIdsToDelete">
                     <nested:write property="id"/>
