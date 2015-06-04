@@ -9,6 +9,8 @@
 	<form-beans>
         <form-bean name="newsListForm"
                    type="com.epam.aa.labtesttask01.form.NewsListForm" />
+        <form-bean name="newsViewForm"
+                   type="com.epam.aa.labtesttask01.form.NewsViewForm" />
 	</form-beans>
 
 	<action-mappings>
@@ -17,6 +19,12 @@
                 name="newsListForm"
                 scope="request">
             <forward name="success" path="/WEB-INF/pages/news/news-list-form.jsp" />
+        </action>
+        <action path="/newsView"
+                type="com.epam.aa.labtesttask01.action.NewsViewAction"
+                name="newsViewForm"
+                scope="request">
+            <forward name="success" path="/WEB-INF/pages/news/news-view-form.jsp" />
         </action>
 	</action-mappings>
 

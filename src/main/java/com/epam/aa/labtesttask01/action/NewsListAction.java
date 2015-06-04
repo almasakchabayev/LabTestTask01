@@ -44,8 +44,7 @@ public class NewsListAction extends Action {
         NewsDao newsDao = daoFactory.getNewsDao();
         try {
             List<News> newsList = newsDao.findAll();
-            NewsListForm newsListForm = form;
-            newsListForm.setNewsList(newsList);
+            form.setNewsList(newsList);
             return mapping.findForward("success");
         } catch (SQLException e) {
             LOGGER.error("Could not retrieve news entities with findAll method", e);

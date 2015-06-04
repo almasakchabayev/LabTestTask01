@@ -7,28 +7,30 @@
 <html:form action="newsList">
 
     <nested:iterate property="newsList">
-            <div class="col-sm-10">
-                <h4>
-                    <nested:write property="title" />: <nested:write property="brief"/>
-                </h4>
-                <p>
-                    <nested:write property="content" />
-                </p>
+        <div class="col-sm-10">
+            <h4>
+                <nested:write property="title" />: <nested:write property="brief"/>
+            </h4>
+            <p>
+                <nested:write property="content" />
+            </p>
+        </div>
+        <div class="col-sm-2 text-right">
+        <span id="date">
+            <nested:write property="date" />
+        </span>
+        </div>
+        <div class="col-sm-12">
+            <div class="text-right">
+                <a href="#">view</a>
+                <a href="#">edit</a>
+                <html:multibox property="newsIdsToDelete">
+                    <nested:write property="id"/>
+                </html:multibox>
             </div>
-            <div class="col-sm-2 text-right">
-            <span id="date">
-                <nested:write property="date" />
-            </span>
-            </div>
-            <div class="col-sm-12">
-                <div class="text-right">
-                    <a href="#">view</a>
-                    <a href="#">edit</a>
-                    <html:multibox property="newsIdsToDelete">
-                        <nested:write property="id"/>
-                    </html:multibox>
-                </div>
-            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
 
     </nested:iterate>
 

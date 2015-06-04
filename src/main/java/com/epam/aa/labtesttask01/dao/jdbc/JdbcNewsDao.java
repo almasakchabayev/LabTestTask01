@@ -3,9 +3,10 @@ package com.epam.aa.labtesttask01.dao.jdbc;
 import com.epam.aa.labtesttask01.dao.DaoFactory;
 import com.epam.aa.labtesttask01.dao.NewsDao;
 import com.epam.aa.labtesttask01.model.News;
-import org.flywaydb.core.internal.dbsupport.JdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.Connection;
+import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,10 +14,11 @@ public class JdbcNewsDao implements NewsDao {
 
     public static final String FIND_ALL = "SELECT id, deleted, title, creation_date, brief, content " +
             "FROM news WHERE deleted = 0";
+    public static final String FIND_BY_ID = "SELECT id, deleted, title, creation_date, brief, content FROM news WHERE id = ?";
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcNewsDao(Connection connection) {
-        this.jdbcTemplate = new JdbcTemplate(connection, 0);
+    public JdbcNewsDao(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource, false);
     }
 
     @Override
@@ -26,7 +28,7 @@ public class JdbcNewsDao implements NewsDao {
 
     @Override
     public News findById(Integer id) {
-        return null;
+        return jdbcTemplate.queryForObject(FIND_BY_ID, new Object[]{id}, new NewsRowMapper());
     }
 
     @Override
@@ -41,18 +43,7 @@ public class JdbcNewsDao implements NewsDao {
 
     @Override
     public List<News> findAll() throws SQLException {
-        List<News> newsList = jdbcTemplate.query(FIND_ALL,
-                rs -> {
-                    News news = new News();
-                    news.setId(rs.getInt("id"));
-                    news.setDeleted(rs.getBoolean("deleted"));
-                    news.setTitle(rs.getString("title"));
-                    news.setDate(rs.getDate("creation_date"));
-                    news.setBrief(rs.getString("brief"));
-                    news.setContent(rs.getString("content"));
-                    return news;
-                });
-        return newsList;
+        return jdbcTemplate.query(FIND_ALL, new NewsRowMapper());
     }
 
     @Override

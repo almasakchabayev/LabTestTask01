@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface NewsDao {
     Integer insert(News news);
-    News findById(Integer id);
+    News findById(Integer id) throws SQLException;
     boolean update(News news);
     boolean delete(Integer id);
 

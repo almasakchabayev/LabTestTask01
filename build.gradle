@@ -21,7 +21,7 @@ dependencies {
     runtime 'jstl:jstl:1.2'
     compile 'ojdbc6:ojdbc6'
     compile 'javax.transaction:jta:1.1'
-    compile 'springframework:spring-jdbc:1.2.6'
+    compile 'org.springframework:spring-jdbc:4.1.6.RELEASE'
     compile 'com.zaxxer:HikariCP:2.3.8'
     compile 'org.flywaydb:flyway-core:3.2.1'
     compile 'org.slf4j:slf4j-api:1.7.12'
