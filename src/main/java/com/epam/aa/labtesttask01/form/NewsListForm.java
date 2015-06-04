@@ -7,10 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsListForm extends ActionForm {
-    List<News> newsList;
+    private List<News> newsList;
+    private String[] newsIdsToDelete;
 
     public News getNews(int index) {
         return newsList.get(index);
+    }
+
+    public String[] getNewsIdsToDelete() {
+        return newsIdsToDelete;
+    }
+
+    public void setNewsIdsToDelete(String[] newsIdsToDelete) {
+        this.newsIdsToDelete = newsIdsToDelete;
     }
 
     public List<News> getNewsList() {

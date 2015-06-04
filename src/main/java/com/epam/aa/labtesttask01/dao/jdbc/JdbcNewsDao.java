@@ -11,6 +11,8 @@ import java.util.List;
 
 public class JdbcNewsDao implements NewsDao {
 
+    public static final String FIND_ALL = "SELECT id, deleted, title, creation_date, brief, content " +
+            "FROM news WHERE deleted = 0";
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcNewsDao(Connection connection) {
@@ -39,9 +41,7 @@ public class JdbcNewsDao implements NewsDao {
 
     @Override
     public List<News> findAll() throws SQLException {
-        String sql = "SELECT id, deleted, title, creation_date, brief, content " +
-                "FROM news WHERE deleted = 0";
-        List<News> newsList = jdbcTemplate.query(sql,
+        List<News> newsList = jdbcTemplate.query(FIND_ALL,
                 rs -> {
                     News news = new News();
                     news.setId(rs.getInt("id"));
@@ -55,16 +55,22 @@ public class JdbcNewsDao implements NewsDao {
         return newsList;
     }
 
-    public static void main(String[] args) {
-        DaoFactory daoFactory = DaoFactory.getInstance("jdbc");
-        NewsDao newsDao = daoFactory.getNewsDao();
+    @Override
+    public void deleteByIds(Integer... ids) throws SQLException {
+        String sql = constructDeleteByIdsString(ids);
+        jdbcTemplate.update(sql);
+    }
 
-        List<News> newses = null;
-        try {
-            newses = newsDao.findAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private String constructDeleteByIdsString(Integer... ids) {
+        StringBuffer sqlBuffer = new StringBuffer("UPDATE news SET deleted = 1 WHERE id in (");
+        String prefix = "";
+        for (Integer id : ids) {
+            sqlBuffer.append(prefix);
+            prefix = ",";
+            sqlBuffer.append(id);
         }
-        System.out.println(newses);
+        sqlBuffer.append(")");
+
+        return sqlBuffer.toString();
     }
 }

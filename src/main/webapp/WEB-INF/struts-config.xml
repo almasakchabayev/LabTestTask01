@@ -7,14 +7,14 @@
 
 
 	<form-beans>
-        <form-bean name="NewsListForm"
+        <form-bean name="newsListForm"
                    type="com.epam.aa.labtesttask01.form.NewsListForm" />
 	</form-beans>
 
 	<action-mappings>
         <action path="/newsList"
                 type="com.epam.aa.labtesttask01.action.NewsListAction"
-                name="NewsListForm"
+                name="newsListForm"
                 scope="request">
             <forward name="success" path="/WEB-INF/pages/news/news-list-form.jsp" />
         </action>

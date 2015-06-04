@@ -12,4 +12,6 @@ public interface NewsDao {
     boolean delete(Integer id);
 
     List<News> findAll() throws SQLException;
+
+    void deleteByIds(Integer... ids) throws SQLException;
 }
