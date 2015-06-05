@@ -6,7 +6,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-nested" prefix="nested"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 
-<html:form action="newsList" onsubmit="return confirm('Are you sure?');">
+<html:form action="newsList" onsubmit="return showConfirm()">
 
     <nested:iterate property="newsList">
         <div class="col-sm-10">
