@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-nested" prefix="nested"%>
 
-<html:form action="/newsView">
+<html:form action="/newsView" onsubmit="return confirm('Are you sure?');">
     <div class="news-part">
         <div class="col-sm-2">
             <bean:message key="body.news.view.title" />
