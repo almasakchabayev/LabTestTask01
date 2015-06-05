@@ -42,6 +42,11 @@ public class NewsEditAction extends Action {
 
     private ActionForward processGetMethod(ActionMapping mapping, NewsForm form) {
         Integer id = form.getId();
+        if (id == null) {
+            News news = new News();
+            form.setNews(news);
+            return mapping.findForward("success");
+        }
         NewsDao newsDao = daoFactory.getNewsDao();
         try {
             News news = newsDao.findById(id);
@@ -56,8 +61,12 @@ public class NewsEditAction extends Action {
         News news = parseNewsFromRequest(form, request);
         try {
             NewsDao newsDao = daoFactory.getNewsDao();
-            newsDao.update(news);
-
+            if (news.getId() == null) {
+                Integer id = newsDao.insert(news);
+                news.setId(id);
+            } else {
+                newsDao.update(news);
+            }
             ActionRedirect redirect = new ActionRedirect(mapping.findForward("redirect"));
             redirect.addParameter("id", news.getId());
             return redirect;
@@ -82,7 +91,9 @@ public class NewsEditAction extends Action {
         Integer id = form.getId();
 
         News news = new News();
-        news.setId(id);
+        if (!id.equals(0)) {
+            news.setId(id);
+        }
         news.setTitle(title);
         news.setDate(date);
         news.setBrief(brief);

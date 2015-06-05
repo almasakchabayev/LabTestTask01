@@ -3,17 +3,24 @@ package com.epam.aa.labtesttask01.dao.jdbc;
 import com.epam.aa.labtesttask01.dao.NewsDao;
 import com.epam.aa.labtesttask01.model.News;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class JdbcNewsDao implements NewsDao {
 
-    public static final String FIND_ALL = "SELECT id, deleted, title, creation_date, brief, content " +
+    public static final String FIND_ALL_SQL = "SELECT id, deleted, title, creation_date, brief, content " +
             "FROM news WHERE deleted = 0";
-    public static final String FIND_BY_ID = "SELECT id, deleted, title, creation_date, brief, content FROM news WHERE deleted = 0 AND id = ?";
-    public static final String UPDATE_NEWS = "UPDATE news SET title = ?, creation_date = ?, brief = ?, content = ? WHERE id = ?";
+    public static final String FIND_BY_ID_SQL = "SELECT id, deleted, title, creation_date, brief, content FROM news WHERE deleted = 0 AND id = ?";
+    public static final String UPDATE_SQL = "UPDATE news SET title = ?, creation_date = ?, brief = ?, content = ? WHERE id = ?";
+    public static final String INSERT_SQL = "INSERT INTO news (title, creation_date, brief, content) VALUES (?, ?, ?, ?)";
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcNewsDao(DataSource dataSource) {
@@ -22,17 +29,27 @@ public class JdbcNewsDao implements NewsDao {
 
     @Override
     public Integer insert(News news) {
-        return null;
+        KeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(
+                con -> {
+                    PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] {"id"});
+                    ps.setString(1, news.getTitle());
+                    ps.setDate(2, new java.sql.Date(news.getDate().getTime()));
+                    ps.setString(3, news.getBrief());
+                    ps.setString(4, news.getContent());
+                    return ps;
+                }, holder);
+        return holder.getKey().intValue();
     }
 
     @Override
     public News findById(Integer id) {
-        return jdbcTemplate.queryForObject(FIND_BY_ID, new Object[]{id}, new NewsRowMapper());
+        return jdbcTemplate.queryForObject(FIND_BY_ID_SQL, new Object[]{id}, new NewsRowMapper());
     }
 
     @Override
     public void update(News news) throws SQLException {
-        jdbcTemplate.update(UPDATE_NEWS,
+        jdbcTemplate.update(UPDATE_SQL,
                 news.getTitle(), news.getDate(), news.getBrief(), news.getContent(), news.getId());
     }
 
@@ -43,7 +60,7 @@ public class JdbcNewsDao implements NewsDao {
 
     @Override
     public List<News> findAll() throws SQLException {
-        return jdbcTemplate.query(FIND_ALL, new NewsRowMapper());
+        return jdbcTemplate.query(FIND_ALL_SQL, new NewsRowMapper());
     }
 
     @Override
