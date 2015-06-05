@@ -46,6 +46,7 @@ public class JdbcDaoFactory extends DaoFactory {
     private void applyMigrations(DataSource ds) {
         Flyway flyway = new Flyway();
         flyway.setDataSource(ds);
+        flyway.clean();
         flyway.migrate();
         LOGGER.info("Flyway migrations successfully applied");
     }

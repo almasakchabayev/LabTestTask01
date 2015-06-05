@@ -6,6 +6,19 @@
            version="3.0">
     <display-name>Maven Struts Examples</display-name>
 
+    <filter>
+        <filter-name>charsetFilter</filter-name>
+        <filter-class>com.epam.aa.labtesttask01.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>charsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>action</servlet-name>
         <servlet-class>
