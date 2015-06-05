@@ -17,6 +17,7 @@ dependencies {
     compile 'org.apache.struts:struts-tiles:1.3.10'
     compile 'org.apache.struts:struts-core:1.3.10'
     compile 'org.apache.struts:struts-taglib:1.3.10'
+    compile 'org.apache.struts:struts-extras:1.3.10'
     compile 'commons-beanutils:commons-beanutils:1.9.2'
     compile 'org.reflections:reflections:0.9.9'
     runtime 'jstl:jstl:1.2'

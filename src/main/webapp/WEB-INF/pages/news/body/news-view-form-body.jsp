@@ -8,7 +8,7 @@
 <html:form action="/newsView">
     <div class="news-part">
         <div class="col-sm-2">
-            News Title
+            <bean:message key="body.news.view.title" />
         </div>
         <div class="col-sm-10">
             <bean:write name="newsForm" property="news.title" />
@@ -19,7 +19,7 @@
 
     <div class="news-part">
         <div class="col-sm-2">
-            News Date
+            <bean:message key="body.news.view.date" />
         </div>
         <div class="col-sm-10">
             <bean:write name="newsForm" property="news.date" />
@@ -30,7 +30,7 @@
 
     <div class="news-part">
         <div class="col-sm-2">
-            News Brief
+            <bean:message key="body.news.view.brief" />
         </div>
         <div class="col-sm-10">
             <bean:write name="newsForm" property="news.brief" />
@@ -41,7 +41,7 @@
 
     <div class="news-part">
         <div class="col-sm-2">
-            News Content
+            <bean:message key="body.news.view.content" />
         </div>
         <div class="col-sm-10">
             <bean:write name="newsForm" property="news.content" />
@@ -53,8 +53,10 @@
 
     <div class="col-sm-12 text-right">
         <nested:link action="/newsEdit" paramId="id" paramProperty="id">
-            Edit
+            <bean:message key="body.news.list.edit" />
         </nested:link>
-        <html:submit value="Delete" />
+        <html:submit>
+            <bean:message key="body.news.list.delete" />
+        </html:submit>
     </div>
 </html:form>

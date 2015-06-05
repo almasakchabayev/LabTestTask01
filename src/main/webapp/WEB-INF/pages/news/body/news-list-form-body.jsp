@@ -25,9 +25,11 @@
         <div class="col-sm-12">
             <div class="text-right">
                 <nested:link action="/newsView" paramId="id" paramProperty="id">
-                    View
+                    <bean:message key="body.news.list.view" />
                 </nested:link>
-                <a href="#">edit</a>
+                <nested:link action="/newsEdit" paramId="id" paramProperty="id">
+                    <bean:message key="body.news.list.edit" />
+                </nested:link>
                 <html:multibox property="newsIdsToDelete">
                     <nested:write property="id"/>
                 </html:multibox>
@@ -39,7 +41,9 @@
     </nested:iterate>
 
     <div class="col-sm-12 text-right">
-        <html:submit value="Delete" />
+        <html:submit>
+            <bean:message key="body.news.list.delete" />
+        </html:submit>
     </div>
 
 </html:form>
